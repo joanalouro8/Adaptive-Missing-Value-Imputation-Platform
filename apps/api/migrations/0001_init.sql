@@ -5,7 +5,7 @@ CREATE TABLE datasets(
     num_rows INTEGER,
     num_features INTEGER,
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
-)
+);
 
 CREATE TABLE experiments(
     id TEXT PRIMARY KEY,
@@ -16,4 +16,16 @@ CREATE TABLE experiments(
     idempotency_key TEXT UNIQUE,
     created_at TEXT NOT NULL DEFAULT (datetime('now')),
     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
-)
+);
+
+CREATE TABLE experiment_runs (
+    id TEXT PRIMARY KEY,
+    experiment_id TEXT NOT NULL REFERENCES experiments(id),
+    algorithm TEXT NOT NULL,
+    params_json TEXT NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('pending', 'running', 'completed', 'failed')),
+    execution_time_ms INTEGER,
+    error_message TEXT,
+    created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+
