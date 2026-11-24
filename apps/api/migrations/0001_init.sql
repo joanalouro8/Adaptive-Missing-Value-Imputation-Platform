@@ -34,6 +34,11 @@ CREATE TABLE experiment_results (
   run_id TEXT NOT NULL REFERENCES experiment_runs(id),
   metric_name TEXT NOT NULL,
   metric_value REAL NOT NULL,
-  artifact_r2_key TEXT,
+  artifact_r2_key TEXT, -- path to the reconstructed csv
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+
+CREATE INDEX idx_experiments_dataset ON experiments(dataset_id);
+CREATE INDEX idx_runs_experiment ON experiment_runs(experiment_id);
+CREATE INDEX idx_results_run ON experiment_results(run_id);
