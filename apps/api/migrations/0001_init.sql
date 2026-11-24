@@ -29,3 +29,11 @@ CREATE TABLE experiment_runs (
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
+CREATE TABLE experiment_results (
+  id TEXT PRIMARY KEY,
+  run_id TEXT NOT NULL REFERENCES experiment_runs(id),
+  metric_name TEXT NOT NULL,
+  metric_value REAL NOT NULL,
+  artifact_r2_key TEXT,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
